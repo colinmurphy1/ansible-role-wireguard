@@ -19,6 +19,8 @@ Currently, the role does not restart the WireGuard interface when changes are ma
   * `listen`: Enable listening for connections on the interface. Defaults to false.
   * `listen_port`: If listen is true, the port to listen on. defaults to 51820.
   * `addresses`: List of IPv4 and IPv6 addresses.
+  * `started`: Start the interface after creation
+  * `enabled`: Enable the interface to start on boot
   * `dns`: DNS server to advertise to peers
   * `post_up`: Post-up commands
   * `pre_down`: Pre-down commands
@@ -42,6 +44,31 @@ None.
 
 ## Example playbook
 
+```yaml
+
+- host: peer1
+  become: yes
+
+  roles:
+    - wireguard
+  
+  vars:
+    wg_interfaces:
+      - interface: wg0
+        listen: true
+        addresses:
+          - 192.168.100.1/24
+        private_key: peer1 private key
+        started: true
+        enabled: true
+        peers:
+          - name: peer2
+            public_key: peer2 public key
+            allowed_ips:
+              - 192.168.100.2/32
+              - 192.168.1.0/24 # adds a route for this network
+            persistent_keepalive: true
+```
 
 ## License 
 
