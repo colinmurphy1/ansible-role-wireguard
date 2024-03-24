@@ -1,0 +1,15 @@
+#!/sbin/openrc-run
+{{ ansible_managed | comment }}
+
+description="WireGuard interface {{ item.interface }}"
+
+depend() {
+    need net
+    need localmount
+}
+start() {
+    wg-quick up {{ item.interface }}
+}
+stop() {
+    wg-quick down {{ item.interface }}
+}

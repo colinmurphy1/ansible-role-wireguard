@@ -1,0 +1,45 @@
+{{ ansible_managed | comment }}
+
+[Interface]
+{% if item.private_key is defined %}
+PrivateKey = {{ item.private_key }}
+{% endif %}
+{% if item.listen | default(wg_interface_listen) %}
+ListenPort = {{ item.listen_port | default(wg_interface_default_port) }}
+{% endif %}
+{% if item.addresses is defined %}
+Address = {{ item.addresses | join(", ") }}
+{% endif %}
+{% if item.dns is defined %}
+DNS = {{ item.dns }}
+{% endif %}
+{% if item.post_up is defined %}
+PostUp = {{ item.post_up | join(";") }}
+{% endif %}
+{% if item.pre_down is defined %}
+PreDown = {{ item.pre_down | join(";") }}
+{% endif %}
+{% if item.post_down is defined %}
+PostDown = {{ item.post_down | join(";") }}
+{% endif %}
+SaveConfig = false
+
+[Peer]
+{% for peer in item.peers %}
+{% if peer.name is defined %}
+# {{ peer.name }}
+{% endif %}
+{% if peer.public_key is defined %}
+PublicKey = {{ peer.public_key }}
+{% endif %}
+{% if peer.allowed_ips is defined %}
+AllowedIPs = {{ peer.allowed_ips | join(", ") }}
+{% endif %}
+{% if peer.endpoint is defined %}
+Endpoint = {{ peer.endpoint }}
+{% endif %}
+{% if peer.persistent_keepalive | default(wg_interface_peer_keepalive) %}
+PersistentKeepalive = {{ wg_persistent_keepalive_time }}
+{% endif %}
+
+{% endfor %}

@@ -1,0 +1,23 @@
+---
+# On Alpine, generate an OpenRC service for each wgX interface
+# Adapted from https://techoverflow.net/2022/11/26/how-to-autostart-wireguard-wg-quick-on-boot-on-alpine-linux/
+
+- name: Create OpenRC service (Alpine)
+  template:
+    src: openrc.j2
+    dest: "/etc/init.d/wg-quick-{{ item.interface }}"
+    mode: '0755'
+    owner: root
+    group: root
+  with_items: "{{ wg_interfaces }}"
+  loop_control:
+    label: "{{ item.interface }}"
+
+- name: Start and/or enable WireGuard interfaces (Alpine)
+  service:
+    name: "wg-quick-{{ item.interface }}"
+    state: "{% if item.started | default(wg_interface_started) %}started{% else %}stopped{% endif %}"
+    enabled: "{% if item.enabled | default(wg_interface_enabled) %}true{% else %}false{% endif %}"
+  with_items: "{{ wg_interfaces }}"
+  loop_control:
+    label: "{{ item.interface }}"

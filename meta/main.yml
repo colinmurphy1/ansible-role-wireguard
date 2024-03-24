@@ -1,0 +1,10 @@
+galaxy_info:
+  author: Colin Murphy
+  description: WireGuard VPN role
+  license: MIT
+  min_ansible_version: "2.5"
+  galaxy_tags:
+    - wireguard
+    - wg
+    - vpn
+dependencies: []

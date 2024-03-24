@@ -1,0 +1,39 @@
+---
+
+#
+# Default role settings
+#
+
+# Install wireguard tools package
+wg_install_wireguard: true
+
+# WireGuard configuration path - don't change this unless you know what you are doing
+wg_config_path: "/etc/wireguard"
+
+# WireGuard interfaces
+wg_interfaces: []
+
+# PersistentKeepalive time in seconds
+wg_persistent_keepalive_time: 30
+
+# When true, ansible manages the sysctls for ipv4 and ipv6 forwarding
+wg_sysctl: true
+
+# Path to managed sysctl file
+wg_sysctl_path: "/etc/sysctl.d/10-ip-forwarding.conf"
+
+# Enable ipv4 forwarding
+wg_sysctl_ipv4_fwd: true
+
+# Enable ipv6 forwarding
+wg_sysctl_ipv6_fwd: true
+
+#
+# Default interface settings
+#
+
+wg_interface_listen: false          # Interface listen
+wg_interface_default_port: 51820    # Default port
+wg_interface_started: true          # Bring up the interface
+wg_interface_enabled: true          # Enable the interface on boot
+wg_interface_peer_keepalive: false  # Enable persistent-keepalive

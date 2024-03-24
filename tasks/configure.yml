@@ -1,0 +1,22 @@
+---
+
+- name: Create wireguard configuration folder
+  file:
+    path: "{{ wg_config_path }}"
+    state: directory
+    mode: '0700'
+    owner: root
+    group: root
+
+- name: Generate configuration files
+  template:
+    src: wg.conf.j2
+    dest: "{{ wg_config_path}}/{{ item.interface }}.conf"
+    mode: '0600'
+    owner: root
+    group: root
+  # This will generate a single configuration file for each interface
+  with_items: "{{ wg_interfaces }}"
+  #notify: restart interface
+  loop_control:
+    label: "{{ item.interface }}"
