@@ -44,6 +44,8 @@ None.
 
 ## Example playbook
 
+**NOTE:** Interface settings should never be set in group_vars, only host_vars. Other settings, such as the default interface settings, may be configured using group_vars.
+
 ```yaml
 
 - host: peer1
