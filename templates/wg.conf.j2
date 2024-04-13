@@ -24,8 +24,8 @@ PostDown = {{ item.post_down | join(";") }}
 {% endif %}
 SaveConfig = false
 
-[Peer]
 {% for peer in item.peers %}
+[Peer]
 {% if peer.name is defined %}
 # {{ peer.name }}
 {% endif %}
