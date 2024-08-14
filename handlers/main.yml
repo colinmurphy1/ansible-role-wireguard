@@ -1,11 +1,11 @@
 ---
 
-- name: sysctl
-  shell: "sysctl -p {{ wg_sysctl_path }}"
+- name: Apply sysctl
+  ansible.builtin.command: "sysctl -p {{ wg_sysctl_path }}"
 
 # This doesn't work - potential fix @ https://rolflekang.com/ansible-handlers-in-loops
-- name: restart interface
-  service:
+- name: Restart interfaces
+  ansible.builtin.service:
     name: "wg-quick@{{ item.name }}"
     state: restarted
   when: (item.started | bool) | default(wg_interface_started)

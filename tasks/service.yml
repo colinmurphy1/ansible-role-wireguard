@@ -2,7 +2,7 @@
 # wg-quick systemd service
 
 - name: Start and/or enable WireGuard interfaces
-  service: 
+  ansible.builtin.service: 
     name: "wg-quick@{{ item.interface }}"
     state: "{% if item.started | default(wg_interface_started) %}started{% else %}stopped{% endif %}"
     enabled: "{% if item.enabled | default(wg_interface_enabled) %}true{% else %}false{% endif %}"

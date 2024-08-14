@@ -1,7 +1,7 @@
 ---
 
 - name: IPv4/IPv6 forwarding sysctls
-  template:
+  ansible.builtin.template:
     src: sysctl.conf.j2
     dest: "{{ wg_sysctl_path }}"
     mode: '0700'
@@ -11,11 +11,11 @@
   notify: sysctl
 
 - name: Remove IPv4/IPv6 forwarding sysctls
-  file:
+  ansible.builtin.file:
     path: "{{ wg_sysctl_path }}"
     state: absent
   when: wg_sysctl == False
 
 # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html#id4
 - name: Run handlers now
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
