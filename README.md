@@ -10,7 +10,7 @@ This role has been developed for use with Debian and Alpine Linux. Other distros
 
 ## Known issues
 
-Currently, the role does not restart the WireGuard interface when changes are made. One must restart the interface using `systemctl` or `rc-service` manually after changing the interface.
+None at the moment.
 
 ## Role Variables
 
