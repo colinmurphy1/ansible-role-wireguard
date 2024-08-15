@@ -3,9 +3,11 @@
 - name: Apply sysctl
   ansible.builtin.command: "sysctl -p {{ wg_sysctl_path }}"
 
-# This doesn't work - potential fix @ https://rolflekang.com/ansible-handlers-in-loops
 - name: Restart interfaces
+  loop: "{{ wg_if_list.results | selectattr('changed', 'equalto', true) | map(attribute='item') | list }}"
   ansible.builtin.service:
-    name: "wg-quick@{{ item.name }}"
+    name: "wg-quick@{{ item.interface }}"
     state: restarted
   when: (item.started | bool) | default(wg_interface_started)
+  loop_control:
+    label: "{{ item.interface }}"

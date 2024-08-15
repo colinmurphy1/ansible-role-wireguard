@@ -1,6 +1,6 @@
 ---
 
-- name: Create wireguard configuration folder
+- name: Create WireGuard configuration folder
   ansible.builtin.file:
     path: "{{ wg_config_path }}"
     state: directory
@@ -17,6 +17,7 @@
     group: root
   # This will generate a single configuration file for each interface
   with_items: "{{ wg_interfaces }}"
-#  notify: Restart interfaces
+  register: wg_if_list
+  notify: Restart interfaces
   loop_control:
     label: "{{ item.interface }}"
