@@ -8,7 +8,7 @@
     owner: root
     group: root
   when: wg_sysctl == True
-  notify: sysctl
+  notify: Apply sysctl
 
 - name: Remove IPv4/IPv6 forwarding sysctls
   ansible.builtin.file:
