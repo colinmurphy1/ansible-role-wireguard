@@ -7,14 +7,14 @@
     mode: '0700'
     owner: root
     group: root
-  when: wg_sysctl == True
+  when: wg_sysctl
   notify: Apply sysctl
 
 - name: Remove IPv4/IPv6 forwarding sysctls
   ansible.builtin.file:
     path: "{{ wg_sysctl_path }}"
     state: absent
-  when: wg_sysctl == False
+  when: not wg_sysctl
 
 # https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_handlers.html#id4
 - name: Run handlers now
